@@ -13,18 +13,34 @@
     {{ template "_internal/google_analytics.html" . }}
     {{ template "_internal/twitter_cards.html" . }}
     {{ template "_internal/opengraph.html" . }}
-
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--<script src="https://kit.fontawesome.com/90b3abc446.js" crossorigin="anonymous"></script>-->
+    {{ if .Site.RSSLink }}
+    <link href="{{ .Site.RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
+    {{ end }}
+    {{ if isset .Site.Params "favicon" }}
+    <link rel="icon" href="{{ .Site.BaseURL }}{{ .Site.Params.favicon }}" />
+    {{ end }}
   </head>
   <body>
     <header class="app-header">
       <a href="{{ .Site.BaseURL }}"><img class="app-header-avatar" src="{{ .Site.Params.avatar | default "avatar.jpg" | relURL }}" alt="{{ .Site.Params.author | default "John Doe" }}" /></a>
       <h1>{{ .Site.Title }}</h1>
       <p>{{ .Site.Params.description | default "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vehicula turpis sit amet elit pretium." }}</p>
+      <div id="social" class="text-center">
+        {{ range .Site.Params.socialbuttons }}
+          <a target="_blank" href="{{ .url }}"><i class="fa fa-{{ .faicon }} fa-2x"></i></a>
+        {{ end }}
+  
+        {{ if isset .Site.Params "email" }}<a href="mailto:{{.Site.Params.email}}"><i class="fa fa-envelope-o fa-2x"></i></a>{{ end }}
+      </div>
+  <!--
       <div class="app-header-social">
         {{ range .Site.Params.social }}
           <a target="_blank" href="{{ .url }}" rel="noreferrer noopener">{{ partial "icon.html" (dict "ctx" $ "name" .name ) }}</a>
         {{ end }}
       </div>
+    -->
     </header>
     <main class="app-container">
       {{ block "main" . }}

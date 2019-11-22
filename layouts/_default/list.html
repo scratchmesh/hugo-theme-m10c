@@ -1,6 +1,6 @@
 {{ define "main" }}
   <article>
-    <h1>{{ .Title }}</h1>
+    <h1>{{ .Site.Params.header }}</h1>
     <ul class="posts-list">
       {{ range $index, $element := .Paginator.Pages }}
         <li class="posts-list-item">
@@ -9,6 +9,9 @@
             {{ partial "icon.html" (dict "ctx" $ "name" "clock") }} {{ .ReadingTime }} min read -
             {{ .PublishDate.Format "Jan 2, 2006" }}
           </span>
+          <div class="post-content">
+            {{ .Summary }}
+          </div>
         </li>
       {{ end }}
     </ul>
